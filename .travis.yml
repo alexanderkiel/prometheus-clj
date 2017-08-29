@@ -1,7 +1,11 @@
 dist: trusty
 language: clojure
 jdk:
+  - openjdk7
   - oraclejdk7
   - oraclejdk8
 lein: 2.6.1
-script: lein test
+script:
+  - lein with-profile 1.6 test
+  - lein with-profile 1.7 test
+  - lein test
