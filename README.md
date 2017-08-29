@@ -1,4 +1,6 @@
-# prometheus-clj
+# prometheus-clj.alpha
+
+[![Build Status](https://travis-ci.org/alexanderkiel/prometheus-clj.alpha.svg?branch=master)](https://travis-ci.org/alexanderkiel/prometheus-clj.alpha)
 
 A Clojure library designed to provide wrappers for Prometheus [SimpleClient](https://github.com/prometheus/client_java) metrics.
 
