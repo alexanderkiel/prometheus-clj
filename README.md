@@ -12,6 +12,12 @@ prometheus-clj is available from [Clojars](https://clojars.org/org.clojars.akiel
 
 ![Clojars Project](http://clojars.org/org.clojars.akiel/prometheus-clj.alpha/latest-version.svg)
 
+## Concepts
+
+This library embraces the usage of one central registry where all collectors are registered. It provides `def` functions life `defcounter` for each collector of the Java library. Defined collectors are named by keywords which can have namespaces. All functions mutating collectors accept the keyword of a collector. In each JVM there is a global space of named collectors.
+
+There are no helpers for measuring Ring request durations like in the origin library. This library is only about Prometheus collectors.
+
 ## Usage
 
 Require prometheus alpha.
