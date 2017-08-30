@@ -1,4 +1,4 @@
-(defproject org.clojars.akiel/prometheus-clj.alpha "0.2-SNAPSHOT"
+(defproject org.clojars.akiel/prometheus-clj.alpha "0.2"
   :description "Clojure wrappers for the Prometheus Java client."
   :url "https://github.com/alexanderkiel/prometheus-clj.alpha"
 
