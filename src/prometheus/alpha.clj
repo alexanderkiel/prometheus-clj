@@ -182,7 +182,7 @@
   Summary$Timer
   (observe-duration- [t] (.observeDuration t)))
 
-(defn observe-duration
+(defn observe-duration!
   "Observes the duration of a histogram or summary timer."
   [timer]
   (observe-duration- timer))

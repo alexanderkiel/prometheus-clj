@@ -62,5 +62,5 @@
   (testing "Use timer on histogram and close if through with-open."
     (let [timer (prom/timer :histogram "t2")]
       (inc 1)
-      (prom/observe-duration timer))
+      (prom/observe-duration! timer))
     (is (pos? (prom/sum :histogram "t2")))))
