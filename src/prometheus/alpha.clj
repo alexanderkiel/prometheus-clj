@@ -3,7 +3,7 @@
     [clojure.string :as str])
   (:import
     [clojure.lang Keyword]
-    [io.prometheus.client Counter Histogram Counter$Child Histogram$Child CollectorRegistry Gauge Gauge$Child Collector SimpleCollector SimpleCollector$Builder]
+    [io.prometheus.client Counter Histogram Counter$Child Histogram$Child CollectorRegistry Gauge Gauge$Child Collector SimpleCollector SimpleCollector$Builder Histogram$Timer Summary Summary$Timer]
     [io.prometheus.client.exporter.common TextFormat]
     [io.prometheus.client.hotspot DefaultExports]
     [java.io StringWriter])
@@ -27,6 +27,9 @@
 
 (defn histogram? [x]
   (instance? Histogram x))
+
+(defn summary? [x]
+  (instance? Summary x))
 
 (defprotocol ToCollector
   (collector- [_]))
@@ -168,6 +171,21 @@
           (.startTimer))
       (throw (ex-info "Not a histogram." {:type (type histogram)})))
     (throw (ex-info "Unknown histogram." {:histogram histogram}))))
+
+(defprotocol Timer
+  (observe-duration- [_]))
+
+(extend-protocol Timer
+  Histogram$Timer
+  (observe-duration- [t] (.observeDuration t))
+
+  Summary$Timer
+  (observe-duration- [t] (.observeDuration t)))
+
+(defn observe-duration
+  "Observes the duration of a histogram or summary timer."
+  [timer]
+  (observe-duration- timer))
 
 (defn sum
   "Gets the current sum of a histogram."

@@ -23,7 +23,8 @@
 (defhistogram
   :histogram
   "Histogram."
-  [0.0 1.0])
+  [0.0 1.0]
+  "test")
 
 (use-fixtures
   :each
@@ -53,7 +54,13 @@
     (is (= 1.0 (prom/get :counter/one_label "label-1")))))
 
 (deftest histogram-test
-  (testing "Use timer on histogram."
-    (with-open [_ (prom/timer :histogram)]
+  (testing "Use timer on histogram and close if through with-open."
+    (with-open [_ (prom/timer :histogram "t1")]
       (inc 1))
-    (is (pos? (prom/sum :histogram)))))
+    (is (pos? (prom/sum :histogram "t1"))))
+
+  (testing "Use timer on histogram and close if through with-open."
+    (let [timer (prom/timer :histogram "t2")]
+      (inc 1)
+      (prom/observe-duration timer))
+    (is (pos? (prom/sum :histogram "t2")))))
