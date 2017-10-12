@@ -198,6 +198,18 @@
       (throw (ex-info "Not a histogram." {:type (type histogram)})))
     (throw (ex-info "Unknown histogram." {:histogram histogram}))))
 
+(defn buckets
+  "Gets the current buckets of a histogram."
+  [histogram & labels]
+  (if-let [histogram (collector histogram)]
+    (if (histogram? histogram)
+      (-> (histogram-with-labels histogram labels)
+          (.get)
+          (.-buckets)
+          (vec))
+      (throw (ex-info "Not a histogram." {:type (type histogram)})))
+    (throw (ex-info "Unknown histogram." {:histogram histogram}))))
+
 (defn dump-metrics
   "Dumps metrics of the default registry using simple client's text format."
   []
