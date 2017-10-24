@@ -159,6 +159,16 @@
        (throw (ex-info "Not a gauge." {:type (type gauge)})))
      (throw (ex-info "Unknown gauge." {:gauge gauge})))))
 
+(defn observe!
+  "Observes a given amount to the histogram with optional labels."
+  [histogram amount & labels]
+  (if-let [histogram (collector histogram)]
+    (if (histogram? histogram)
+      (-> (histogram-with-labels histogram labels)
+          (.observe amount))
+      (throw (ex-info "Not a histogram." {:type (type histogram)})))
+    (throw (ex-info "Unknown histogram." {:histogram histogram}))))
+
 (defn timer
   "Returns a timer of the histogram with optional labels.
 
